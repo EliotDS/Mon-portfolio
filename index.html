@@ -3,183 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Eliot Dosnon</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Cinéma & Composition</title>
     <style>
+        /* --- Styles Généraux & Couleurs --- */
         :root {
-            --primary: #2563eb;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --gray: #64748b;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #e50914; /* Rouge cinéma */
+            --text-color: #f5f5f5;
+            --secondary-text: #b3b3b3;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--light); 
-            color: var(--dark);
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        nav {
-            padding: 1.5rem 10%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .logo { font-weight: 700; font-size: 1.2rem; color: var(--primary); text-transform: uppercase; }
-
-        header {
-            height: 40vh;
+            margin: 0;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
-            padding: 0 20px;
         }
 
-        .container { padding: 4rem 10%; max-width: 1200px; margin: auto; }
-
-        details {
-            background: white;
-            margin-bottom: 1.5rem;
+        section {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+            padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            font-size: 2rem;
+            margin-top: 0;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        /* --- Animation des Menus Dépliants --- */
+        details {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            cursor: pointer;
         }
 
         summary {
-            padding: 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            list-style: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            outline: none;
+            list-style: none; /* Cache la flèche par défaut */
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        summary::after { content: '▼'; font-size: 1rem; }
-
-        .content { padding: 2rem; border-top: 1px solid #eee; }
-
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+        summary::after {
+            content: "▼";
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
         }
 
-        /* --- CORRECTION DES IMAGES --- */
-        .image-item {
-            border-radius: 8px;
-            background: #e2e8f0;
-            height: 250px; /* Hauteur fixe pour une grille harmonieuse */
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        /* Animation du texte à l'intérieur */
+        details p {
+            animation: fadeIn 0.5s ease-out;
+            color: var(--secondary-text);
+            margin-top: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Conteneur Image & Description --- */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(229, 9, 20, 0.85); /* Rouge transparent */
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid #ddd;
-            overflow: hidden; /* Empêche l'image de dépasser */
-            position: relative;
-        }
-
-        .image-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Remplit le cadre sans déformer la photo */
-            display: block;
-        }
-        /* ---------------------------- */
-
-        footer {
-            background: var(--dark);
-            color: white;
+            padding: 20px;
+            box-sizing: border-box;
             text-align: center;
-            padding: 3rem;
-            margin-top: 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(20px);
         }
 
-        .btn {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.8rem 2rem;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
+        .image-container:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-container:hover .description {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo">Eliot Dosnon</div>
-</nav>
-
-<header>
-    <h1>Portfolio d'Eliot Dosnon</h1>
-    <p>Voici mes différentes créations liées à l'audiovisuel</p>
-</header>
-
-<div class="container">
-    <details>
-        <summary>Composition d'image</summary>
-        <div class="content">
-            <div class="image-grid">
-                <div class="image-item">
-                    <img src="PhotoMaroc.jpg" alt="Photographie">
-                </div>
-                <div class="image-item">
-                    <span style="color: var(--gray);">Projet à venir</span>
-                </div>
-            </div>
-        </div>
-    </details>
-
-    <details>
-        <summary>Rédaction de script</summary>
-        <div class="content">
-            <div class="image-grid">
-                <div class="image-item">
-                    <span style="color: var(--gray);">Aperçu Script 1</span>
-                </div>
-                <div class="image-item">
-                    <span style="color: var(--gray);">Aperçu Script 2</span>
-                </div>
-            </div>
-        </div>
-    </details>
-
-    <details>
-        <summary>Cinéma</summary>
-        <div class="content">
-            <div class="image-grid">
-                <div class="image-item">
-                    <span style="color: var(--gray);">Court-métrage 1</span>
-                </div>
-                <div class="image-item">
-                    <span style="color: var(--gray);">Court-métrage 2</span>
-                </div>
-            </div>
-        </div>
-    </details>
-</div>
-
-<footer>
-    <p>Contact : eliot.dosnon@gmail.com</p>
-    <a href="mailto:eliot.dosnon@gmail.com" class="btn">Envoyer un mail</a>
-</footer>
-
-</body>
-</html>
+    <section id="cinema">
+        <h2>Le Cinéma</h2>
+        
+        <details open>
+            <summary>L'évolution du 7ème art</summary>
+            <p
