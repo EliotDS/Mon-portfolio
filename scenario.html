@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            line-height: 1.8; /* Espacement optimal pour la lecture */
+            line-height: 1.8;
             color: var(--dark);
             background-color: #ffffff;
             margin: 0;
@@ -23,7 +23,7 @@
         }
 
         .container {
-            max-width: 700px; /* Largeur limitée pour ne pas fatiguer l'œil */
+            max-width: 700px;
             margin: 80px auto;
             padding: 0 20px;
         }
@@ -70,6 +70,42 @@
             margin: 50px 0;
         }
 
+        /* --- NOUVEAU STYLE POUR LES LIENS --- */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Espace entre les liens */
+            margin: 30px 0;
+        }
+
+        .doc-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--light-gray);
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .doc-link:hover {
+            background-color: #fff;
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .arrow {
+            font-size: 1.2rem;
+        }
+        /* ------------------------------------- */
+
         footer {
             margin-top: 80px;
             font-size: 0.9rem;
@@ -100,10 +136,22 @@
 
             <hr>
 
-            <p>
-                Black Pill
-            </p>
+            <div class="links-container">
+                <a href="chemin/vers/black-pill.pdf" class="doc-link" target="_blank">
+                    <span>📄 Black Pill</span>
+                    <span class="arrow">→</span>
+                </a>
 
+                <a href="chemin/vers/premisse-2.pdf" class="doc-link" target="_blank">
+                    <span>📄 Titre de la Prémisse 2</span>
+                    <span class="arrow">→</span>
+                </a>
+
+                <a href="chemin/vers/premisse-3.pdf" class="doc-link" target="_blank">
+                    <span>📄 Titre de la Prémisse 3</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
             <blockquote style="border-left: 3px solid var(--primary); padding-left: 20px; font-style: italic; color: var(--gray); margin: 30px 0;">
                 "La prémisse, c'est le lien le plus simple entre le personnage et l'intrigue" 
             </blockquote>
